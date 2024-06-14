@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 1.6rem;
+  min-height: 100vh;
+  color: #555;
+  background-color: #fff;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.top h1 {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.top select option {
+  text-align: center;
+}
+
+.label-options {
+  display: flex;
+  gap: 4%;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.chart {
+  display: flex;
+  font-size: 10rem;
+  max-width: 400px;
+  height: 350px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.top .chart_types {
+  display: flex;
+  margin-top: 3%;
+  text-align: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  flex-grow: 3;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-flow: column;
+}
+
+.schools {
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+th,
+td {
+  padding: 1rem;
+  border: 1px solid black;
+}
+
+th {
+  text-align: left;
+  color: white;
+}
+
+tr:nth-child(1) {
+  background: hsl(0 0% 0% / 0.5);
+}
+
+th:not(:first-child) {
+  text-align: center;
+}
+
+tr:nth-of-type(2n) {
+  background: hsl(0 0% 0% / 0.1);
+}
+
+td {
+  text-align: center;
+}
+
+.school-name {
+  text-align: left;
+}
+
+@media (max-width: 512px) {
+  .chart {
+    height: 64vh;
+  }
+}
+
+.top .chart_types button {
+  padding: 10px 25px;
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eleições 2020</title>
+    <link href="./css//style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="top">
+      <h1>Resultado Eleições 2020</h1>
+      <div class="label-options">
+        <label for="candidates">Candidato:</label>
+        <select name="candidates" id="candidates"></select>
+      </div>
+      <!-- <div class="chart_types"> -->
+      <!--   <button onclick="setChartType('bar')">Barras</button> -->
+      <!--   <button onclick="setChartType('line')">Linhas</button> -->
+      <!--   <button onclick="setChartType('doughnut')">Rosca</button> -->
+      <!--   <button onclick="setChartType('polarArea')">Área Polar</button> -->
+      <!--   <button onclick="setChartType('radar')">Radar</button> -->
+      <!-- </div> -->
+    </div>
+    <div class="chart">
+      <canvas id="votesByZone" type="bar"></canvas>
+    </div>
+    <div class="content">
+      <table class="schools"></table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="./js/index.js"></script>
+  </body>
+</html>
