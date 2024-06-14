@@ -9,7 +9,7 @@ let setCandidates;
 let setTurns;
 let setSchools;
 
-fetch("/src/data.json")
+fetch("/data.json")
   .then((response) => {
     if (response.ok === true) {
       return response.json();
