@@ -34,7 +34,7 @@ fetch("src/data.json")
 
 function createSchoolsList(data) {
   for (const el of document.querySelectorAll(".table > div").values()) {
-    document.querySelector(".table").remove(el);
+    document.querySelector(".table").removeChild(el);
   }
   const tableHeader = document.createElement("div");
   const schoolHeader = document.createElement("div");
