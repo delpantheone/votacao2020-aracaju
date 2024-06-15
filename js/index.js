@@ -33,9 +33,9 @@ fetch("src/data.json")
   });
 
 function createSchoolsList(data) {
-  [...document.querySelectorAll(".table > *")].forEach((el) =>
-    el.parentNode.removeChild(el),
-  );
+  for (const el of document.querySelectorAll(".table > div").values()) {
+    document.querySelector(".table").remove(el);
+  }
   const tableHeader = document.createElement("div");
   const schoolHeader = document.createElement("div");
   const zoneHeader = document.createElement("div");
