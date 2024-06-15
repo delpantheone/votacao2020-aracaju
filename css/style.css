@@ -9,11 +9,14 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.6rem;
+  font-weight: 700;
   min-height: 100vh;
   color: #555;
   background-color: #fff;
+  overflow-x: hidden;
+  --webkit-font-smoothing: antialiased;
 }
 
 .top {
@@ -67,47 +70,88 @@ body {
 .content {
   display: flex;
   flex-flow: column;
+  align-items: center;
 }
 
-.schools {
-  border-collapse: collapse;
+.table {
+  display: grid;
   font-size: 1.4rem;
+  width: 100vw;
+  max-width: 80vw;
+  margin-bottom: 4px;
 }
 
-th,
-td {
+.table-header,
+.table-item {
   padding: 1rem;
   border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  transform: translateX(50%);
+  opacity: 0;
+  transition: 150ms;
 }
 
-th {
-  text-align: left;
+.table-header.show,
+.table-item.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.table-header {
   color: white;
-}
-
-tr:nth-child(1) {
   background: hsl(0 0% 0% / 0.5);
+  text-transform: uppercase;
 }
 
-th:not(:first-child) {
+.table-header > div:first-child,
+.table-item > div:first-child {
+  width: 80%;
+  text-align: left;
+}
+
+.table-header > div:not(:first-child),
+.table-item > div:not(:first-child) {
   text-align: center;
+  width: 10%;
 }
 
-tr:nth-of-type(2n) {
+.table-item:nth-of-type(2n) {
   background: hsl(0 0% 0% / 0.1);
 }
 
-td {
+.table-item-zone,
+.table-item-votes {
   text-align: center;
 }
 
-.school-name {
+.table-item-name {
   text-align: left;
+}
+
+.table > div:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.table > div:last-child:not(.table-header) {
+  border-radius: 0 0 8px 8px;
 }
 
 @media (max-width: 512px) {
   .chart {
     height: 64vh;
+  }
+  .table {
+    max-width: 96vw;
+  }
+  .table-header > div:first-child,
+  .table-item > div:first-child {
+    width: 72%;
+  }
+  .table-header > div:not(:first-child),
+  .table-item > div:not(:first-child) {
+    width: 14%;
   }
 }
 

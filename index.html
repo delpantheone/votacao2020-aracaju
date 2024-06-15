@@ -2,9 +2,15 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1" />
     <title>Eleições 2020</title>
     <link href="css/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -14,19 +20,12 @@
         <label for="candidates">Candidato:</label>
         <select name="candidates" id="candidates"></select>
       </div>
-      <!-- <div class="chart_types"> -->
-      <!--   <button onclick="setChartType('bar')">Barras</button> -->
-      <!--   <button onclick="setChartType('line')">Linhas</button> -->
-      <!--   <button onclick="setChartType('doughnut')">Rosca</button> -->
-      <!--   <button onclick="setChartType('polarArea')">Área Polar</button> -->
-      <!--   <button onclick="setChartType('radar')">Radar</button> -->
-      <!-- </div> -->
     </div>
     <div class="chart">
       <canvas id="votesByZone" type="bar"></canvas>
     </div>
     <div class="content">
-      <table class="schools"></table>
+      <div class="table"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

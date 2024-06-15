@@ -1,6 +1,6 @@
 const ctxZone = document.getElementById("votesByZone");
 const candidates = document.getElementById("candidates");
-const schools = document.querySelector(".schools");
+const schools = document.querySelector(".table");
 
 let chartZones;
 let jsonData;
@@ -8,6 +8,7 @@ let setZones;
 let setCandidates;
 let setTurns;
 let setSchools;
+let zoneFilter = [];
 
 fetch("src/data.json")
   .then((response) => {
@@ -33,7 +34,7 @@ fetch("src/data.json")
 
 function createSchoolsList(data) {
   schools.innerHTML =
-    "<tr><th>Local Votação</th><th>Zona</th><th>Votos</th></tr>";
+    "<div class='table-header'><div>Local de votação</div><div>Zona</div><div>Votos</div></div>";
   const list = [];
   for (const school of setSchools) {
     const votes = data
@@ -48,7 +49,8 @@ function createSchoolsList(data) {
       .filter(
         (row) =>
           row.NM_VOTAVEL === candidates.value &&
-          row.NM_LOCAL_VOTACAO === school,
+          row.NM_LOCAL_VOTACAO === school &&
+          zoneFilter.indexOf(row.NR_ZONA) > -1,
       )
       .map((row) => row.NR_ZONA)
       .pop();
@@ -56,40 +58,59 @@ function createSchoolsList(data) {
       .split(",")
       .reverse()
       .join()
-      .replace(",", " ")
+      .replaceAll(",", " ")
+      .replaceAll(/(.*(?=\())(\(.*\))(.*)/g, "$1$3 - $2")
       .trim();
     list.push({ renamedSchool, votes, zone });
   }
   const filteredList = list
-    .filter((item) => item.votes !== 0)
+    .filter((item) => item.votes !== 0 && item.zone)
     .sort((a, b) => b.votes - a.votes);
   for (const item of filteredList) {
-    const schoolItem = document.createElement("tr");
-    const schoolName = document.createElement("td");
-    const schoolZone = document.createElement("td");
-    const schoolVotes = document.createElement("td");
-    schoolItem.classList.add("school");
-    schoolName.classList.add("school-name");
-    schoolZone.classList.add("school-zone");
-    schoolVotes.classList.add("school-votes");
+    const schoolItem = document.createElement("div");
+    const schoolName = document.createElement("div");
+    const schoolZone = document.createElement("div");
+    const schoolVotes = document.createElement("div");
+    schoolItem.classList.add("table-item");
+    schoolName.classList.add("table-item-name");
+    schoolZone.classList.add("table-item-zone");
+    schoolVotes.classList.add("table-item-votes");
     schoolItem.append(schoolName);
     schoolItem.append(schoolZone);
     schoolItem.append(schoolVotes);
     schoolName.innerText = item.renamedSchool;
     schoolZone.innerText = item.zone;
     schoolVotes.innerText = item.votes.toString();
-    schools.firstChild.append(schoolItem);
+    schools.append(schoolItem);
   }
+
+  const tableRows = document.querySelectorAll(".table > div");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("show", entry.isIntersecting);
+        if (entry.isIntersecting) observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0,
+    },
+  );
+  tableRows.forEach((row) => {
+    observer.observe(row);
+  });
 }
 
 candidates.addEventListener("change", (ev) => {
   setChartType(ctxZone.getAttribute("type"));
-  createSchoolsList(jsonData);
 });
 
 function setChartType(chartType) {
   chartZones.destroy();
+  zoneFilter.splice(0, zoneFilter.length);
   createChart(jsonData, chartType);
+  createSchoolsList(jsonData);
 }
 
 function createChart(data, type) {
@@ -100,6 +121,7 @@ function createChart(data, type) {
   for (const item of zones) {
     zonesLabels.push(`Zona ${item}`);
     arrVotesByNameAndZone.push(votesByNameAndZone(candidates.value, item));
+    zoneFilter.push(`${item}`);
   }
   function votesByNameAndZone(name, zone) {
     return data
@@ -144,14 +166,20 @@ function createChart(data, type) {
         },
         legend: {
           display: true,
-          // onclick: handleClick,
+          onClick: handleClick,
         },
       },
     },
   });
-  function handleClick(ev, item, legend) {
-    // not Working
-    console.log(ev, item);
+  function handleClick(ev, legendItem, legend) {
+    const searchItem = legendItem.text.match(/\d+/g).pop();
+    if (zoneFilter.indexOf(searchItem) > -1) {
+      zoneFilter.splice(zoneFilter.indexOf(searchItem), 1);
+    } else {
+      zoneFilter.push(searchItem);
+    }
+    createSchoolsList(jsonData);
+    legend.chart.toggleDataVisibility(legendItem.index);
     legend.chart.update();
   }
 }
