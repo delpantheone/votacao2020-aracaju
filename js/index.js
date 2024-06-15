@@ -33,8 +33,22 @@ fetch("src/data.json")
   });
 
 function createSchoolsList(data) {
-  schools.innerHTML =
-    "<div class='table-header'><div>Local de votação</div><div>Zona</div><div>Votos</div></div>";
+  const tableHeader = document.createElement("div");
+  const schoolHeader = document.createElement("div");
+  const zoneHeader = document.createElement("div");
+  const votesHeader = document.createElement("div");
+
+  tableHeader.classList.add("table-header");
+  schoolHeader.innerText = "Local de votação";
+  zoneHeader.innerText = "Zona";
+  votesHeader.innerText = "Votos";
+
+  tableHeader.append(schoolHeader);
+  tableHeader.append(zoneHeader);
+  tableHeader.append(votesHeader);
+
+  schools.append(tableHeader);
+
   const list = [];
   for (const school of setSchools) {
     const votes = data
